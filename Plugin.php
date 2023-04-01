@@ -109,7 +109,7 @@ class Plugin implements PluginInterface
     /**
      * 评论链接过滤器
      */
-    public static function filterComments($comment) {
+    public static function filterComments(array $comment) {
         return self::filterComment($comment, null, true);
     }
 }
