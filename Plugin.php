@@ -13,7 +13,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package AntiXSS
  * @author ohmyga
- * @version 1.0.0
+ * @version 1.2.0
  * @link https://github.com/BakaLabs/Typecho-1.2-AntiXSS
  */
 
