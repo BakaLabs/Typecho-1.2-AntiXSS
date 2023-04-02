@@ -4,6 +4,7 @@ namespace TypechoPlugin\AntiXSS;
 
 use Typecho\Plugin\PluginInterface;
 use Typecho\Widget\Helper\Form;
+use Utils\Helper;
 
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
@@ -13,7 +14,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package AntiXSS
  * @author ohmyga
- * @version 1.2.0
+ * @version 1.2.0-fix.1
  * @link https://github.com/BakaLabs/Typecho-1.2-AntiXSS
  */
 
@@ -24,6 +25,10 @@ class Plugin implements PluginInterface
      */
     public static function activate()
     {
+        if (Helper::options()->version != '1.2.0') {
+            throw new \Typecho\Plugin\Exception(_t('插件 <b>AntiXSS</b> 仅适用于 Typecho 1.2.0 稳定版'));
+        }
+        
         // 注册评论回调函数
         \Typecho\Plugin::factory('Widget_Feedback')->comment = [__CLASS__, 'filterComment'];
         
@@ -71,13 +76,11 @@ class Plugin implements PluginInterface
      * Ref: https://github.com/typecho/typecho/blob/daef17d7eb250419ff84f499e87d25ee71daac87/var/Typecho/Common.php#L533
      * 
      * @static
-     * @access public
+     * @access private
      * @param array $comment 评论数据
-     * @param mixed $post    文章数据
      * @return array
      */
-    public static function filterComment(array $comment, mixed $post, bool $isSelf = false)
-    {
+    private static function __filterComment(array $comment, $isSelf = false) {
         $comment_url = $comment["url"];
         $url_params = parse_url(str_replace(["\r", "\n", "\t", " "], "", $comment_url));
 
@@ -107,9 +110,28 @@ class Plugin implements PluginInterface
     }
 
     /**
+     * 提交评论过滤器
+     * 
+     * @static
+     * @access public
+     * @param array $comment 评论数据
+     * @param mixed $post    文章数据
+     * @return array
+     */
+    public static function filterComment(array $comment, $post)
+    {
+        return self::__filterComment($comment, false);
+    }
+
+    /**
      * 评论链接过滤器
+     * 
+     * @static
+     * @access public
+     * @param array $comment 评论数据
+     * @return array
      */
     public static function filterComments(array $comment) {
-        return self::filterComment($comment, null, true);
+        return self::__filterComment($comment, true);
     }
 }
