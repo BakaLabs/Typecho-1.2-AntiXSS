@@ -1,11 +1,11 @@
 <h1 align="center">Typecho AntiXSS Plugin</h1>
 
-> 此插件**仅适用**于 **Typecho 1.2 稳定版**
+> 此插件**仅适用**于 **Typecho 1.2.0** 稳定版
 
 ---
 
 ## 用途&说明
-- 用于修复 Typecho 1.2 稳定版中的评论者个人链接潜在的 XSS 漏洞
+- 用于修复 Typecho 1.2.0 稳定版中的评论者个人链接潜在的 XSS 漏洞
 - 漏洞详细：[#1546](https://github.com/typecho/typecho/issues/1546)、[#1545](https://github.com/typecho/typecho/issues/1545)
 
 ## 使用&安装
